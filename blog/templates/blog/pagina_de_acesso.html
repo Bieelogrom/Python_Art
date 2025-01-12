@@ -19,7 +19,7 @@
           <p class="text-white fs-2">Seja um verificado</p>
           <small class="text-white text-wrap text-center" style="width: 17rem;">Junte-se a comunidade e poste sua arte.</small>
         </div>
-        <form method="post" class="col-md-6 right-box" id="formulario_login">
+        <form method="post" class="col-md-6 right-box" id="formulario_login">{% csrf_token %}
           <div class="row align-items-center">
             <div class="header-text mb-4 text-center">
               <p>Seja bem-vindo!</p>
