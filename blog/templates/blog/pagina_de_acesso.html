@@ -19,7 +19,8 @@
           <p class="text-white fs-2">Seja um verificado</p>
           <small class="text-white text-wrap text-center" style="width: 17rem;">Junte-se a comunidade e poste sua arte.</small>
         </div>
-        <form method="post" class="col-md-6 right-box" id="formulario_login">{% csrf_token %}
+        <form method="post" class="col-md-6 right-box" id="formulario_login">
+          {% csrf_token %}
           <div class="row align-items-center">
             <div class="header-text mb-4 text-center">
               <p>Seja bem-vindo!</p>
@@ -39,16 +40,51 @@
             <div class="d-flex flex-column gap-1">
               <div class="d-flex gap-1 w-100">
                 <div class="input-group">
-                  <button id="botao_de_login" type="submit" class="btn btn-lg btn-primary w-100 fs-6"><i class="bi bi-person-check-fill"></i> Login</button>
+                  <button id="botao_de_login" type="submit" class="btn btn-lg btn-primary w-100 fs-6" name="botao_login"><i class="bi bi-person-check-fill"></i> Login</button>
                 </div>
                 <div class="input-group">
-                  <button class="btn btn-lg btn-danger w-100 fs-6"><i class="bi bi-person-fill-add"></i> Registar</button>
+                  <button type="button" class="btn btn-lg btn-danger w-100 fs-6" data-bs-toggle="modal" data-bs-target="#exampleModal" name="botao_registar"><i class="bi bi-person-fill-add"></i> Registar</button>
                 </div>
               </div>
               <a class="btn btn-lg btn-secondary w-100 fs-6" href="{% url 'home_page' %}"><i class="bi bi-arrow-left-short"></i> Voltar</a>
             </div>
           </div>
         </form>
+      </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cadastro</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="">
+              <div class="mb-3">
+                <label for="nome_usuario" class="col-form-label">Nome</label>
+                <input type="text" class="form-control" id="nome_usuario" placeholder="Primeiro Nome" />
+              </div>
+              <div class="mb-3">
+                <label for="sobrenome_usuario" class="col-form-label">Sobrenome</label>
+                <input type="text" class="form-control" id="sobrenome_usuario" placeholder="Sobrenome" />
+              </div>
+              <div class="mb-3">
+                <label for="email_usuario" class="col-form-label">Email</label>
+                <input type="email" class="form-control" id="email_usuario" placeholder="Email" />
+              </div>
+              <div class="mb-3">
+                <label for="email_usuario" class="col-form-label">Senha</label>
+                <input type="password" class="form-control" id="email_usuario" placeholder="Senha" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+          </div>
+        </div>
       </div>
     </div>
 
