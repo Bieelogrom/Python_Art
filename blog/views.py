@@ -16,9 +16,7 @@ def pagina_de_acesso(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('posts')
-    else:
-        form = AuthenticationForm()
+            return redirect('posts', {'user': user})
     return render(request, 'blog/pagina_de_acesso.html', {})
     
 def posts(request):
