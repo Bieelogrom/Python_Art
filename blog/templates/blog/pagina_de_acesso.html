@@ -21,16 +21,19 @@
         </div>
         <form method="post" class="col-md-6 right-box" id="formulario_login">
           {% csrf_token %}
+          <input type="hidden" name="login">
           <div class="row align-items-center">
             <div class="header-text mb-4 text-center">
               <p>Seja bem-vindo!</p>
               <p>A comunidade de arte.</p>
             </div>
-            <div class="input-group mb-3">
-              <input id="input_email" name="input_email" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Endereço de Email" />
+            <div class="form-floating mb-3">
+              <input id="input_email" name="input_email" type="text" class="form-control bg-light" placeholder="Email@Email.com" required />
+              <label for="input_senha">Email</label>
             </div>
-            <div class="input-group mb-1">
-              <input id="input_senha" name="input_senha" type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Senha de Acesso" />
+            <div class="form-floating mb-3">
+              <input id="input_senha" name="input_senha" type="password" class="form-control bg-light" placeholder="Sua senha" required/>
+              <label for="input_senha">Senha</label>
             </div>
             <div class="input-group mb-5 d-flex justify-content-between">
               <div class="forgot">
@@ -61,7 +64,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="">
+            <form action="" method="post">{% csrf_token %}
+              <input type="hidden" name="cadastro">
               <div class="mb-3">
                 <label for="nome_usuario" class="col-form-label">Nome</label>
                 <input type="text" class="form-control" id="nome_usuario" placeholder="Primeiro Nome" />

@@ -1,6 +1,8 @@
 {% extends "blog/base.html" %}
 
 {% block content %}
-    
+    {% if user.is_authenticated %}
+        <p>Olá, {{ user.email }}</p>
+    {% endif %}
 {% endblock content %}
 
