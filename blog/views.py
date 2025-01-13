@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
+from .forms import FormularioDeCadastro
+from .models import CustomUser
 
 # Create your views here.
 
@@ -19,7 +21,17 @@ def pagina_de_acesso(request):
                 login(request, user)
                 return redirect('posts')
         elif 'cadastro' in request.POST:
-            print("oi")
+            nome = request.POST['nome_usuario']
+            sobrenome = request.POST['sobrenome_usuario']
+            apelido = request.POST['apelido_usuario']
+            email = request.POST['email_usuario']
+            senha = request.POST['senha_usuario']
+            #mensagem = f"Usuário {nome} {sobrenome}, email : {email} e senha: {senha}"
+            user = CustomUser.objects.create_user(username=apelido, email=email, password=senha, first_name=nome, last_name=sobrenome)
+            user.save()
+            user = authenticate(request, username=apelido, password=senha)
+            login(request, user)
+            return redirect('posts')
     return render(request, 'blog/pagina_de_acesso.html', {})
     
 def deslogar(request):
