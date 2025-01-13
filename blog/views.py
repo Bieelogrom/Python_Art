@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import FormularioDeCadastro
-from .models import CustomUser
+from .models import CustomUser, Posts
+from django.utils import timezone
 
 # Create your views here.
 
@@ -40,7 +41,8 @@ def deslogar(request):
         
     
 def posts(request):
-    return render(request, 'blog/posts.html', {})
+    posts = Posts.objects.filter(data_publicacao__lte=timezone.now()).order_by('-data_publicacao')
+    return render(request, 'blog/posts.html', {'posts': posts})
 
 
 
