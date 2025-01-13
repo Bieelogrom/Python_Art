@@ -1,8 +1,18 @@
-{% extends "blog/base.html" %}
+{% extends 'blog/base.html' %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <p>Olá, {{ user.email }}</p>
-    {% endif %}
-{% endblock content %}
-
+  <nav class="navbar navbar-light bg-secondary">
+    <div class="container-fluid d-flex align-items-center justify-content-center">
+      <a class="navbar-brand text-light" href="#">Populares</a>
+      <a class="navbar-brand text-light" href="#">Recentes</a>
+    </div>
+  </nav>
+  <main class="container p-2">
+    <div class="card" style="width: 18rem;">
+      <img src="..." class="card-img-top" alt="..." />
+      <div class="card-body">
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+    </div>
+  </main>
+{% endblock %}
