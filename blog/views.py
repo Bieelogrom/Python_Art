@@ -35,7 +35,8 @@ def pagina_de_acesso(request):
             login(request, user)
             return redirect('posts')
     return render(request, 'blog/pagina_de_acesso.html', {})
-    
+
+@login_required
 def deslogar(request):
     logout(request)
     return redirect('home_page')
@@ -59,6 +60,9 @@ def posts(request):
     posts = Posts.objects.filter(data_publicacao__lte=timezone.now()).order_by('-data_publicacao')
     return render(request, 'blog/posts.html', {'posts': posts,'form': formulario_de_postagem})
 
+def detalhes(request, id):
+    post = Posts.objects.get(id=id)
+    return render(request, 'blog/detalhes.html', {'post': post})
 
 
 
