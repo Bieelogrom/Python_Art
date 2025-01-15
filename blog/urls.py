@@ -8,7 +8,8 @@ urlpatterns = [
     path('pagina_de_acesso/', views.pagina_de_acesso, name="pagina_de_acesso"),
     path('posts/', views.posts, name="posts"),
     path('deslogar/', views.deslogar, name="deslogar"),
-    path('detalhes/<int:id>/', views.detalhes, name="detalhes")
+    path('detalhes/<int:id>/', views.detalhes, name="detalhes"),
+    path("deletar/<int:id>", views.apagar_postagem, name="deletar")
 ]
 
 if settings.DEBUG:

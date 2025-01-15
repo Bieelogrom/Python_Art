@@ -1,15 +1,15 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-  <section class="container border p-1 d-flex mt-4" style="height: 400px">
-    <div class="w-50 bg-dark img-fluid" style="background: url('{{ post.imagem.url }}'); background-size: cover; background-position: center;"></div>
-    <div class="w-50 h-100 p-3">
-      <div class="dropdown">
+  <section class="container border p-1 d-flex flex-column flex-sm-column flex-md-row flex-lg-row mt-4" style="height: 400px">
+    <div class="w-100 h-100 bg-dark img-fluid" style="background: url('{{ post.imagem.url }}'); background-size: cover; background-position: center;"></div>
+    <div class="w-100 h-100 p-3">
+      <div class="dropend">
         <button class="btn fs-4" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i></button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           {% if post.autor.id == request.user.id %}
             <li>
-              <a class="dropdown-item" href="#">Remover</a>
+              <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">Remover</button>
             </li>
             <li>
               <a class="dropdown-item" href="#">Editar</a>
@@ -25,4 +25,30 @@
       </div>
     </div>
   </section>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Remover publicação?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <p>Tem certeza que deseja remover?</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <form action="{% url 'deletar' post.id %}" method="post">{% csrf_token %}
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+            <button type="submit" class="btn btn-danger">Confirmar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from .forms import FormularioDePostagem, FormularioDeLogin
@@ -55,6 +55,13 @@ def posts(request):
 def detalhes(request, id):
     post = Posts.objects.get(id=id)
     return render(request, 'blog/detalhes.html', {'post': post})
+
+@login_required
+def apagar_postagem(request, id):
+    post = Posts.objects.get(id=id)
+    if request.method == "POST":
+        post.delete()
+    return redirect('posts')
 
 
 
