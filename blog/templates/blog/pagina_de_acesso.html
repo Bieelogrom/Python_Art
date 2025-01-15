@@ -26,7 +26,7 @@
               <p>Seja bem-vindo!</p>
               <p>A comunidade de arte.</p>
             </div>
-            {% for item in form %}
+            {% for item in form_login %}
               <div class="form-floating mb-3">
                 {{ item }}
                 <label for="">{{ item.label }}</label>
@@ -70,27 +70,12 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <input type="hidden" name="cadastro" />
-              <div class="mb-3">
-                <label for="nome_usuario" class="col-form-label">Nome</label>
-                <input type="text" class="form-control" name="nome_usuario" id="nome_usuario" placeholder="Primeiro Nome" />
-              </div>
-              <div class="mb-3">
-                <label for="sobrenome_usuario" class="col-form-label">Sobrenome</label>
-                <input type="text" class="form-control" name="sobrenome_usuario" id="sobrenome_usuario" placeholder="Sobrenome" />
-              </div>
-              <div class="mb-3">
-                <label for="apelido_usuario" class="col-form-label">Apelido</label>
-                <input type="text" class="form-control" name="apelido_usuario" id="apelido_usuario" placeholder="Apelido" />
-              </div>
-              <div class="mb-3">
-                <label for="email_usuario" class="col-form-label">Email</label>
-                <input type="email" class="form-control" name="email_usuario" id="email_usuario" placeholder="Email" />
-              </div>
-              <div class="mb-3">
-                <label for="email_usuario" class="col-form-label">Senha</label>
-                <input type="password" class="form-control" name="senha_usuario" id="senha_usuario" placeholder="Senha" />
-              </div>
+  
+                <div class="mb-3">
+                  <label for="nome_usuario" class="col-form-label">{{item.label}}</label>
+     
+                </div>
+ 
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

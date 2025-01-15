@@ -25,7 +25,7 @@ def pagina_de_acesso(request):
             else:
                 messages.error(request, 'Email ou senha inválidos')
     formulario_de_login = FormularioDeLogin()
-    return render(request, 'blog/pagina_de_acesso.html', {'form': formulario_de_login})
+    return render(request, 'blog/pagina_de_acesso.html', {'form_login': formulario_de_login})
 
 @login_required
 def deslogar(request):
