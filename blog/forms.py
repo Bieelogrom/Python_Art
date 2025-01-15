@@ -7,6 +7,10 @@ class FormularioDeCadastro(UserCreationForm):
     class Meta:
         model = User
         fields = ['first_name','last_name','username', 'email', 'password1', 'password2']
+
+class FormularioDeLogin(forms.Form):
+    email = forms.CharField(label='Email', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Search'}))
+    senha = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Search'}))
         
 class FormularioDePostagem(forms.ModelForm):
     class Meta:

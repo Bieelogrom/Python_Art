@@ -21,24 +21,28 @@
         </div>
         <form method="post" class="col-md-6 right-box" id="formulario_login">
           {% csrf_token %}
-          <input type="hidden" name="login" />
           <div class="row align-items-center">
             <div class="header-text mb-4 text-center">
               <p>Seja bem-vindo!</p>
               <p>A comunidade de arte.</p>
             </div>
-            <div class="form-floating mb-3">
-              <input id="input_email" name="input_email" type="text" class="form-control bg-light" placeholder="Email@Email.com" required />
-              <label for="input_senha">Email</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input id="input_senha" name="input_senha" type="password" class="form-control bg-light" placeholder="Sua senha" required />
-              <label for="input_senha">Senha</label>
-            </div>
+            {% for item in form %}
+              <div class="form-floating mb-3">
+                {{ item }}
+                <label for="">{{ item.label }}</label>
+              </div>
+            {% endfor %}
             <div class="input-group mb-5 d-flex justify-content-between">
               <div class="forgot">
                 <small><a href="">Esqueci a senha?</a></small>
               </div>
+              {% if messages %}
+                <div class="">
+                  {% for message in messages %}
+                    <small class="text-danger">Email ou senha inválidos!</small>
+                  {% endfor %}
+                </div>
+              {% endif %}
             </div>
             <div class="d-flex flex-column gap-1">
               <div class="d-flex gap-1 w-100">
