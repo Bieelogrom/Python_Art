@@ -50,7 +50,7 @@
                   <button id="botao_de_login" type="submit" class="btn btn-lg btn-primary w-100 fs-6" name="botao_login"><i class="bi bi-person-check-fill"></i> Login</button>
                 </div>
                 <div class="input-group">
-                  <button type="button" class="btn btn-lg btn-danger w-100 fs-6" data-bs-toggle="modal" data-bs-target="#exampleModal" name="botao_registar"><i class="bi bi-person-fill-add"></i> Registar</button>
+                  <button type="button" class="btn btn-lg btn-danger w-100 fs-6" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-person-fill-add"></i> Registar</button>
                 </div>
               </div>
               <a class="btn btn-lg btn-secondary w-100 fs-6" href="{% url 'home_page' %}"><i class="bi bi-arrow-left-short"></i> Voltar</a>
@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <form action="" method="post">
+    <form method="post">
       {% csrf_token %}
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -70,16 +70,16 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-  
+                {% for item in form_registro %}
                 <div class="mb-3">
-                  <label for="nome_usuario" class="col-form-label">{{item.label}}</label>
-     
+                  <label for="nome_usuario" class="col-form-label">{{ item.label }}</label>
+                  {{ item }}
                 </div>
- 
+                {% endfor %}
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-              <button type="submit" class="btn btn-primary">Cadastrar</button>
+              <button type="submit" class="btn btn-primary" name="botao_registar">Cadastrar</button>
             </div>
           </div>
         </div>

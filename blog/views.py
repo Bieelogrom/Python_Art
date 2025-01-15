@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-from .forms import FormularioDePostagem, FormularioDeLogin
+from .forms import FormularioDePostagem, FormularioDeLogin, FormularioDeRegistro
 from .models import CustomUser, Posts
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -14,18 +14,33 @@ def home_page(request):
 
 def pagina_de_acesso(request):
     if request.method == "POST":
-        formulario_de_login = FormularioDeLogin(request.POST)
-        if formulario_de_login.is_valid():
-            email = formulario_de_login.cleaned_data['email']
-            senha = formulario_de_login.cleaned_data['senha']
-            usuario = authenticate(request, username=email, password=senha)
-            if usuario is not None:
-                login(request, usuario)
-                return redirect('posts')
-            else:
-                messages.error(request, 'Email ou senha inválidos')
+        if 'botao_login' in request.POST:
+            formulario_de_login = FormularioDeLogin(request.POST)
+            if formulario_de_login.is_valid():
+                email = formulario_de_login.cleaned_data['email']
+                senha = formulario_de_login.cleaned_data['senha']
+                usuario = authenticate(request, username=email, password=senha)
+                if usuario is not None:
+                    login(request, usuario)
+                    return redirect('posts')
+                else:
+                    messages.error(request, 'Email ou senha inválidos')
+        elif 'botao_registar' in request.POST:
+            formulario_de_registro = FormularioDeRegistro(request.POST)
+            if formulario_de_registro.is_valid():
+                usuario = formulario_de_registro.cleaned_data
+                novo_usuario = CustomUser(
+                    first_name = usuario['first_name'],
+                    last_name = usuario['last_name'],
+                    username = usuario['username'],
+                    email = usuario['email'],
+                    password = usuario['password'],
+                )
+                novo_usuario.save()
+                return redirect('home')
+    formulario_de_registro = FormularioDeRegistro()
     formulario_de_login = FormularioDeLogin()
-    return render(request, 'blog/pagina_de_acesso.html', {'form_login': formulario_de_login})
+    return render(request, 'blog/pagina_de_acesso.html', {'form_login': formulario_de_login, 'form_registro': formulario_de_registro})
 
 @login_required
 def deslogar(request):
@@ -58,7 +73,7 @@ def detalhes(request, id):
 
 @login_required
 def apagar_postagem(request, id):
-    post = Posts.objects.get(id=id)
+    post = get_object_or_404(Posts, id=id)
     if request.method == "POST":
         post.delete()
     return redirect('posts')
