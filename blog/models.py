@@ -13,5 +13,10 @@ class Posts(models.Model):
     imagem = models.ImageField(upload_to='img/posts')
     data_publicacao = models.DateTimeField(default=timezone.now)
     autor = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+class PostagensSalvas(models.Model):
+    id_usuario_que_salvou = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    id_postagem_salva = models.ForeignKey(Posts, on_delete=models.CASCADE)
+    horario_salvo = models.DateTimeField(default=timezone.now)
     
     
