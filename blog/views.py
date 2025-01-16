@@ -19,25 +19,31 @@ def pagina_de_acesso(request):
             if formulario_de_login.is_valid():
                 email = formulario_de_login.cleaned_data['email']
                 senha = formulario_de_login.cleaned_data['senha']
+                # return HttpResponse(f'Email: {email} Senha: {senha}')
                 usuario = authenticate(request, username=email, password=senha)
+                # return HttpResponse(usuario)
                 if usuario is not None:
                     login(request, usuario)
                     return redirect('posts')
                 else:
                     messages.error(request, 'Email ou senha inválidos')
         elif 'botao_registar' in request.POST:
+            """
+                Necessário inserir uma senha de até 8 chars para criar a conta.
+            """
             formulario_de_registro = FormularioDeRegistro(request.POST)
             if formulario_de_registro.is_valid():
                 usuario = formulario_de_registro.cleaned_data
-                novo_usuario = CustomUser(
-                    first_name = usuario['first_name'],
-                    last_name = usuario['last_name'],
-                    username = usuario['username'],
-                    email = usuario['email'],
-                    password = usuario['password'],
-                )
-                novo_usuario.save()
-                return redirect('home')
+                if usuario['password1'] == usuario['password2']:
+                    novo_usuario = CustomUser(
+                        first_name = usuario['first_name'],
+                        last_name = usuario['last_name'],
+                        username = usuario['username'],
+                        email = usuario['email'],
+                    )
+                    novo_usuario.set_password(usuario['password1'])
+                    novo_usuario.save()
+                    return redirect('pagina_de_acesso')
     formulario_de_registro = FormularioDeRegistro()
     formulario_de_login = FormularioDeLogin()
     return render(request, 'blog/pagina_de_acesso.html', {'form_login': formulario_de_login, 'form_registro': formulario_de_registro})
@@ -77,6 +83,10 @@ def apagar_postagem(request, id):
     if request.method == "POST":
         post.delete()
     return redirect('posts')
+
+@login_required
+def perfil(request):
+    return render(request, 'blog/perfil.html', {})
 
 
 

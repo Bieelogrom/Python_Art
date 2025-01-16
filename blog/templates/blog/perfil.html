@@ -1,0 +1,39 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <div class="container py-4">
+        <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+            <div class="bg-dark rounded-circle" style="height: 150px; width: 150px;">
+            </div>
+            <h2>{{ request.user.username }}</h2>
+            <p>0 Salvos</p>
+        </div>
+        <div class="row gap-1">
+            <div class="col">
+                <div class="bg-dark rounded" style="height: 300px; width: 200px">
+
+                </div>
+            </div>
+            <div class="col">
+                <div class="bg-dark rounded" style="height: 300px; width: 200px">
+
+                </div>
+            </div>
+            <div class="col">
+                <div class="bg-dark rounded" style="height: 300px; width: 200px">
+
+                </div>
+            </div>
+            <div class="col">
+                <div class="bg-dark rounded" style="height: 300px; width: 200px">
+
+                </div>
+            </div>
+            <div class="col">
+                <div class="bg-dark rounded" style="height: 300px; width: 200px">
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
