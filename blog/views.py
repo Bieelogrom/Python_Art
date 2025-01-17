@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from .forms import FormularioDePostagem, FormularioDeLogin, FormularioDeRegistro
-from .models import CustomUser, Posts
+from .models import CustomUser, Posts, PostagensSalvas
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -85,8 +85,22 @@ def apagar_postagem(request, id):
     return redirect('posts')
 
 @login_required
+def salvar_postagem(request, id):
+    usuario = CustomUser.objects.get(id=request.user.id)
+    postagem = Posts.objects.get(id=id)
+    if usuario in PostagensSalvas.objects.all():
+        print("oi")
+    else:
+        nova_postagem_salva = PostagensSalvas(id_usuario_que_salvou=usuario, id_postagem_salva=postagem)
+        nova_postagem_salva.save()
+    # mensagem = f"<p>ID da publicação : {id}</br>ID do usuário: {request.user.id}</p>"
+    # return HttpResponse(mensagem)
+    return redirect("posts")
+
+@login_required
 def perfil(request):
-    return render(request, 'blog/perfil.html', {})
+    contagem_de_salvos = CustomUser.objects.filter(id=request.user.id).count()
+    return render(request, 'blog/perfil.html', {'contagem_de_salvos': contagem_de_salvos})
 
 
 
