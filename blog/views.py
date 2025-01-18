@@ -88,19 +88,22 @@ def apagar_postagem(request, id):
 def salvar_postagem(request, id):
     usuario = CustomUser.objects.get(id=request.user.id)
     postagem = Posts.objects.get(id=id)
-    if usuario in PostagensSalvas.objects.all():
-        print("oi")
+    postagens_salvas = PostagensSalvas.objects.filter(id_usuario_que_salvou=usuario, id_postagem_salva=postagem).first()
+    if postagens_salvas:
+        postagens_salvas.delete()
+        return redirect("posts")
     else:
         nova_postagem_salva = PostagensSalvas(id_usuario_que_salvou=usuario, id_postagem_salva=postagem)
         nova_postagem_salva.save()
-    # mensagem = f"<p>ID da publicação : {id}</br>ID do usuário: {request.user.id}</p>"
-    # return HttpResponse(mensagem)
+        # mensagem = f"<p>ID da publicação : {id}</br>ID do usuário: {request.user.id}</p>"
     return redirect("posts")
 
 @login_required
 def perfil(request):
-    contagem_de_salvos = CustomUser.objects.filter(id=request.user.id).count()
-    return render(request, 'blog/perfil.html', {'contagem_de_salvos': contagem_de_salvos})
+    contagem_de_salvos = PostagensSalvas.objects.filter(id_usuario_que_salvou=request.user.id).count()
+    postagens_salvas_pelo_usuario = PostagensSalvas.objects.filter(id_usuario_que_salvou=request.user).select_related('id_postagem_salva')
+    # return HttpResponse(contagem_de_salvos)
+    return render(request, 'blog/perfil.html', {'contagem_de_salvos': contagem_de_salvos, 'postagens_salvas_pelo_usuario': postagens_salvas_pelo_usuario})
 
 
 
