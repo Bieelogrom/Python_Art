@@ -55,6 +55,16 @@ def deslogar(request):
         
 @login_required
 def posts(request):
+    posts = Posts.objects.filter(data_publicacao__lte=timezone.now()).order_by('-data_publicacao')
+    return render(request, 'blog/posts.html', {'posts': posts})
+
+@login_required
+def detalhes(request, id):
+    post = Posts.objects.get(id=id)
+    return render(request, 'blog/detalhes.html', {'post': post})
+
+@login_required
+def fazer_postagem(request):
     if request.method == "POST":
         formulario_de_postagem = FormularioDePostagem(request.POST, request.FILES)
         if formulario_de_postagem.is_valid():
@@ -69,13 +79,7 @@ def posts(request):
             return redirect('posts')
     else:
         formulario_de_postagem = FormularioDePostagem()
-    posts = Posts.objects.filter(data_publicacao__lte=timezone.now()).order_by('-data_publicacao')
-    return render(request, 'blog/posts.html', {'posts': posts,'form': formulario_de_postagem})
-
-@login_required
-def detalhes(request, id):
-    post = Posts.objects.get(id=id)
-    return render(request, 'blog/detalhes.html', {'post': post})
+    return render(request, 'blog/postagem.html', {'form': formulario_de_postagem})
 
 @login_required
 def apagar_postagem(request, id):
@@ -104,7 +108,7 @@ def editar_postagem(request, id):
     if request.method == "POST":
         form = FormularioDePostagem(request.POST, request.FILES, instance=postagem)
         if form.is_valid():
-            form.save(commit=False)
+            form.save()
         return redirect("posts")
     else:
         form = FormularioDePostagem(instance=postagem)

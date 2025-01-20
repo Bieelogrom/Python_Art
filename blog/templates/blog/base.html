@@ -48,28 +48,7 @@
 
       {% endblock %}
     </main>
-    <button type="button" class="btn btn-primary btn-lg position-fixed" style="bottom: 20px; right: 20px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-plus-circle-fill"></i> Publicar</button>
-
-    <form method="post" enctype="multipart/form-data" id="formulario_postagem">
-      {% csrf_token %}
-      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">{{ form }}</div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Publicar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
+    <a type="button" class="btn btn-primary btn-lg position-fixed" href="{% url "fazer_postagem" %}" style="bottom: 20px; right: 20px;"><i class="bi bi-plus-circle-fill"></i> Publicar</a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
