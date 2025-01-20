@@ -61,7 +61,8 @@ def posts(request):
 @login_required
 def detalhes(request, id):
     post = Posts.objects.get(id=id)
-    return render(request, 'blog/detalhes.html', {'post': post})
+    salvo = PostagensSalvas.objects.filter(id_postagem_salva=post, id_usuario_que_salvou=request.user)
+    return render(request, 'blog/detalhes.html', {'post': post, 'salvo': salvo})
 
 @login_required
 def fazer_postagem(request):

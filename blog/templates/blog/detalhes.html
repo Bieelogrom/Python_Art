@@ -17,7 +17,11 @@
           {% endif %}
           <li>
             <a class="dropdown-item" href="{% url 'salvar_postagem' post.id %}">
-              Salvar
+              {% if salvo %}
+                Dessalvar
+              {% else %}
+                Salvar
+              {% endif %}
             </a>
           </li>
           <li>
@@ -47,7 +51,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <form action="{% url 'deletar' post.id %}" method="post">{% csrf_token %}
+          <form action="{% url 'deletar' post.id %}" method="post">
+            {% csrf_token %}
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
             <button type="submit" class="btn btn-danger">Confirmar</button>
           </form>
