@@ -12,7 +12,7 @@
               <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">Remover</button>
             </li>
             <li>
-              <a class="dropdown-item" href="#">Editar</a>
+              <a class="dropdown-item" href="{% url 'editar_postagem' post.id %}">Editar</a>
             </li>
           {% endif %}
           <li>

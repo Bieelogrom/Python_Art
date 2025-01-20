@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+  <div class="container my-3">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit" class="btn btn-primary">Atualizar</button>
+      <button type="button" class="btn btn-primary" id="botao_voltar">Voltar</button>
+    </form>
+  </div>
+{% endblock %} 

@@ -99,6 +99,19 @@ def salvar_postagem(request, id):
     return redirect("posts")
 
 @login_required
+def editar_postagem(request, id):
+    postagem = get_object_or_404(Posts, id=id)
+    if request.method == "POST":
+        form = FormularioDePostagem(request.POST, request.FILES, instance=postagem)
+        if form.is_valid():
+            form.save(commit=False)
+        return redirect("posts")
+    else:
+        form = FormularioDePostagem(instance=postagem)
+    return render(request, 'blog/postagem.html', {'form': form})
+
+
+@login_required
 def perfil(request):
     contagem_de_salvos = PostagensSalvas.objects.filter(id_usuario_que_salvou=request.user.id).count()
     postagens_salvas_pelo_usuario = PostagensSalvas.objects.filter(id_usuario_que_salvou=request.user).select_related('id_postagem_salva')
