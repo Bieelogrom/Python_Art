@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .forms import FormularioDePostagem, FormularioDeLogin, FormularioDeRegistro
 from .models import CustomUser, Posts, PostagensSalvas
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import re
 
 # Create your views here.
 
@@ -47,6 +48,28 @@ def pagina_de_acesso(request):
     formulario_de_registro = FormularioDeRegistro()
     formulario_de_login = FormularioDeLogin()
     return render(request, 'blog/pagina_de_acesso.html', {'form_login': formulario_de_login, 'form_registro': formulario_de_registro})
+
+def validacao_de_senha(request):
+    if request.method == "POST":
+        senha = request.POST.get('password', '')
+        erros = []
+        
+        if len(senha) < 8:
+            erros.append("Senha precisa ter 8 ou mais carácteres!")
+        if not re.search(r'[A-Z]', senha):
+            erros.append("A senha deve conter pelo menos uma letra maiúscula!")
+        if not re.search(r'[a-z]', senha):
+            erros.append("A senha deve conter pelo menos uma letra minúscula!")
+        if not re.search(r'[0-9]', senha):
+            erros.append("A senha deve conter pelo menos um número!")
+        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', senha):
+            erros.append("A senha deve conter pelo menos um caractere especial!")
+        
+        if erros:
+            return JsonResponse({'valido': False, 'erros': erros})
+        else: 
+            return JsonResponse({'valido': True})
+    return JsonResponse({'error': 'Método não permitido!'}, status=405)
 
 @login_required
 def deslogar(request):

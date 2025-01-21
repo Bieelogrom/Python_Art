@@ -72,7 +72,7 @@
             <div class="modal-body">
                 {% for item in form_registro %}
                 <div class="mb-3">
-                  <label for="nome_usuario" class="col-form-label">{{ item.label }}</label>
+                  <label for="{{ item.id }}" class="col-form-label">{{ item.label }}</label>
                   {{ item }}
                 </div>
                 {% endfor %}

@@ -25,17 +25,31 @@ class FormularioDePostagem(forms.ModelForm):
             'imagem': 'Imagem da postagem',
         }
         
-class FormularioDeRegistro(UserCreationForm):
+class FormularioDeRegistro(forms.ModelForm):
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirme sua senha...'}), label="Confirmar senha")
     class Meta:
         model = get_user_model()
-        fields = ['first_name','last_name','username', 'email', 'password1', 'password2']
+        fields = [
+            'first_name', 'last_name', 'username', 'email', 'password'
+        ]
+        exclude = (
+            'last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined'
+        )
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Seu primeiro nome...'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Seu último nome...'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Seu sobrenome...'}),
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Um apelido...'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Um email válido...'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Uma senha...'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirme a senha...'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Uma senha segura...'}),
         }
+        labels = {
+            'first_name': 'Primeiro nome',
+            'last_name': 'Sobrenome',
+            'username': 'Apelido',
+            'email': 'E-mail',
+            'password': 'Senha'
+        }
+        
+
     
         
