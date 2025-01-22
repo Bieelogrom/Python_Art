@@ -139,7 +139,7 @@ def editar_postagem(request, id):
         form = FormularioDePostagem(request.POST, request.FILES, instance=postagem)
         if form.is_valid():
             form.save()
-        return redirect("posts")
+        return redirect("posts", 2)
     else:
         form = FormularioDePostagem(instance=postagem)
     return render(request, 'blog/postagem.html', {'form': form})
