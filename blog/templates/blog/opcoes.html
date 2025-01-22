@@ -1,5 +1,35 @@
-{% extends "blog/base.html" %}
+{% extends 'blog/base.html' %}
 
 {% block content %}
-    
-{% endblock  %}
+  <div class="d-flex h-100">
+    <div class="w-25 h-100 bg-dark text-light">
+      <div class="p-2 my-2 mx-3 border-bottom">
+        <h3>Opções</h3>
+      </div>
+      <div class="p-4 container fs-5">
+        <div>
+          <a href="" class="nav-link btn-outline-light rounded">
+            <p>
+              <i class="bi bi-person-circle"></i> Conta
+            </p>
+          </a>
+        </div>
+        <div>
+          <a href="" class="nav-link btn-outline-light rounded">
+            <p>
+              <i class="bi bi-person-workspace"></i> Aparência
+            </p>
+          </a>
+        </div>
+        <div>
+          <a href="" class="nav-link btn-outline-light rounded">
+            <p>
+              <i class="bi bi-bar-chart-fill"></i> Dados
+            </p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div></div>
+  </div>
+{% endblock %}
