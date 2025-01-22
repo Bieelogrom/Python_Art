@@ -138,7 +138,6 @@ def editar_postagem(request, id):
         form = FormularioDePostagem(instance=postagem)
     return render(request, 'blog/postagem.html', {'form': form})
 
-
 @login_required
 def perfil(request):
     contagem_de_salvos = PostagensSalvas.objects.filter(id_usuario_que_salvou=request.user.id).count()
@@ -146,5 +145,7 @@ def perfil(request):
     # return HttpResponse(contagem_de_salvos)
     return render(request, 'blog/perfil.html', {'contagem_de_salvos': contagem_de_salvos, 'postagens_salvas_pelo_usuario': postagens_salvas_pelo_usuario})
 
-
+@login_required
+def opcoes(request):
+    return render(request, 'blog/opcoes.html', {})
 

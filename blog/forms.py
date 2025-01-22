@@ -6,7 +6,7 @@ from .models import Posts, CustomUser
 
 
 class FormularioDeLogin(forms.Form):
-    email = forms.CharField(label='Email', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Search'}))
+    email = forms.CharField(label='Apelido', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Search'}))
     senha = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Search'}))
         
 class FormularioDePostagem(forms.ModelForm):

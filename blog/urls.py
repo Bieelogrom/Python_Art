@@ -15,6 +15,7 @@ urlpatterns = [
     path("fazer_postagem/", views.fazer_postagem, name="fazer_postagem"),
     path("salvar_postagem/<int:id>", views.salvar_postagem, name="salvar_postagem"),
     path("editar_postagem/<int:id>", views.editar_postagem, name="editar_postagem"),
+    path("opcoes/", views.opcoes, name="opcoes"),
 ]
 
 if settings.DEBUG:
