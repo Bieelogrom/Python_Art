@@ -35,16 +35,15 @@ def pagina_de_acesso(request):
             formulario_de_registro = FormularioDeRegistro(request.POST)
             if formulario_de_registro.is_valid():
                 usuario = formulario_de_registro.cleaned_data
-                if usuario['password1'] == usuario['password2']:
-                    novo_usuario = CustomUser(
-                        first_name = usuario['first_name'],
-                        last_name = usuario['last_name'],
-                        username = usuario['username'],
-                        email = usuario['email'],
-                    )
-                    novo_usuario.set_password(usuario['password1'])
-                    novo_usuario.save()
-                    return redirect('pagina_de_acesso')
+                novo_usuario = CustomUser(
+                    first_name = usuario['first_name'],
+                    last_name = usuario['last_name'],
+                    username = usuario['username'],
+                    email = usuario['email'],
+                )
+                novo_usuario.set_password(usuario['password'])
+                novo_usuario.save()
+                return redirect('pagina_de_acesso')
     formulario_de_registro = FormularioDeRegistro()
     formulario_de_login = FormularioDeLogin()
     return render(request, 'blog/pagina_de_acesso.html', {'form_login': formulario_de_login, 'form_registro': formulario_de_registro})
@@ -52,6 +51,7 @@ def pagina_de_acesso(request):
 def validacao_de_senha(request):
     if request.method == "POST":
         senha = request.POST.get('password', '')
+        
         erros = []
         
         if len(senha) < 8:

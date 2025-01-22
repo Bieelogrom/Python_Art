@@ -26,7 +26,6 @@ class FormularioDePostagem(forms.ModelForm):
         }
         
 class FormularioDeRegistro(forms.ModelForm):
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirme sua senha...'}), label="Confirmar senha")
     class Meta:
         model = get_user_model()
         fields = [
