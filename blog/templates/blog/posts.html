@@ -5,8 +5,8 @@
 {% block content %}
   <nav class="navbar navbar-light bg-secondary">
     <div class="container-fluid d-flex align-items-center justify-content-center">
-      <a class="navbar-brand text-light" href="#">Populares</a>
-      <a class="navbar-brand text-light" href="#">Recentes</a>
+      <a class="navbar-brand text-light" href="{% url "posts" 1 %}">Populares</a>
+      <a class="navbar-brand text-light" href="{% url "posts" 2 %}">Recentes</a>
     </div>
   </nav>
   <section class="container my-5">
@@ -19,6 +19,7 @@
             <div class="card-img-overlay">
               <h5 class="card-title">{{ post.titulo }}</h5>
               <p class="card-text">{{ post.descricao }}</p> 
+              <small class="card-text">Publicado: {{ post.data_publicacao }}</small> 
             </div>
           </div>
         </div>

@@ -22,7 +22,7 @@
         <p class="w-75 text-center" style="color: #929487; ">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa, mollitia molestias! Delectus consectetur eligendi recusandae nesciunt officia, eum harum? Itaque ullam aliquam a neque laboriosam eligendi nisi fugiat velit! Voluptatum!</p>
         <div class="w-50 d-flex flex-row gap-1">
           {% if user.is_authenticated %}
-            <a class="btn btn-primary w-100" href="{% url 'posts' %}">Acessar</a>
+            <a class="btn btn-primary w-100" href="{% url 'posts' 1 %}">Acessar</a>
           {% else %}
             <a class="btn btn-primary w-100" href="{% url 'pagina_de_acesso' %}">Entrar</a>
           {% endif %}

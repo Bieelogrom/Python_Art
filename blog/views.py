@@ -6,6 +6,7 @@ from .models import CustomUser, Posts, PostagensSalvas
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Count
 import re
 
 # Create your views here.
@@ -25,7 +26,7 @@ def pagina_de_acesso(request):
                 # return HttpResponse(usuario)
                 if usuario is not None:
                     login(request, usuario)
-                    return redirect('posts')
+                    return redirect('posts', 1)
                 else:
                     messages.error(request, 'Email ou senha inválidos')
         elif 'botao_registar' in request.POST:
@@ -77,8 +78,13 @@ def deslogar(request):
     return redirect('home_page')
         
 @login_required
-def posts(request):
-    posts = Posts.objects.filter(data_publicacao__lte=timezone.now()).order_by('-data_publicacao')
+def posts(request, categoria):
+    if categoria == 1:
+        posts = Posts.objects.annotate(num_salvos=Count('postagenssalvas')).order_by('-num_salvos', '-data_publicacao')
+    elif categoria == 2:
+        posts = Posts.objects.filter(data_publicacao__lte=timezone.now()).order_by('-data_publicacao')
+    else:
+        posts = Posts.objects.filter(data_publicacao__lte=timezone.now()).order_by('-data_publicacao')
     return render(request, 'blog/posts.html', {'posts': posts})
 
 @login_required
@@ -100,7 +106,7 @@ def fazer_postagem(request):
                 imagem = nova_postagem['imagem']
             ) 
             post.save()
-            return redirect('posts')
+            return redirect('posts', 1)
     else:
         formulario_de_postagem = FormularioDePostagem()
     return render(request, 'blog/postagem.html', {'form': formulario_de_postagem})
@@ -110,7 +116,7 @@ def apagar_postagem(request, id):
     post = get_object_or_404(Posts, id=id)
     if request.method == "POST":
         post.delete()
-    return redirect('posts')
+    return redirect('posts', 1)
 
 @login_required
 def salvar_postagem(request, id):
@@ -119,12 +125,12 @@ def salvar_postagem(request, id):
     postagens_salvas = PostagensSalvas.objects.filter(id_usuario_que_salvou=usuario, id_postagem_salva=postagem).first()
     if postagens_salvas:
         postagens_salvas.delete()
-        return redirect("posts")
+        return redirect("perfil")
     else:
         nova_postagem_salva = PostagensSalvas(id_usuario_que_salvou=usuario, id_postagem_salva=postagem)
         nova_postagem_salva.save()
         # mensagem = f"<p>ID da publicação : {id}</br>ID do usuário: {request.user.id}</p>"
-    return redirect("posts")
+    return redirect("perfil")
 
 @login_required
 def editar_postagem(request, id):
